@@ -20,16 +20,8 @@ struct reservation {
 struct reservation reservations[200];
 int numrese = 0;
 int found = 0;
+int ref;
 int i;
-
-void recherche(){
-    for (i = 0; i < numrese ; i++){
-        if(strcmp(nomm, reservation[i].nom) == 0){
-                found++;
-                break;
-             }
-    }
-}
 
 void ajouter_une_reservation(){
     printf("*******AJOUTER UNE RESERVATION*******\n");
@@ -63,7 +55,7 @@ void ajouter_une_reservation(){
     printf("l'annee : ");
     scanf("%s", &reservations[numrese].dates.annee);
     
-    for(i = 001; i < numrese ; i++){
+    for(i = 11; i < numrese ; i++){
             printf("la reference : %d",i);
     }
     
@@ -75,26 +67,79 @@ void modifier_ou_supprimer_une_reservation()
     printf("*******MODIFIER OU SUPPRIMER UNE RESERVATION*******\n");
     
     int choix;
-    char nomm[50];
     
     printf("1.modifer une reservation . ");
     printf("2.supprimer une reservation . ");
     
-    printf("veuillez entrer un choix :")
+    printf("veuillez entrer un choix :");
     scanf("%d", choix);
     
     if(choix == 1){
-        printf("veuillez entrer la reservation que vous vouler modifier :")
-        scanf("%s", nomm);
+        printf("veuillez entrer la reference de reservation que vous vouler modifier :")
+        scanf("%d", &ref);
         
-        recherche();
+        for (i = 0; i < numrese ; i++){
+            if(ref == reservations[i].refernce){
+                found++;
+                break;
+            }
+        }
         
         if(found == 0)
-           printf("Ce livre n'existe pas");
-        else
-           printf("entrer le nom a ajouté: ");
-           scanf("%d", &reservation[i].nom);
-           printf("le nom à été mis-à-jouré\n");
+           printf("Cette reference n'existe pas");
+        else{
+           printf("que ce que vous voulez modifier ?")
+           printf("1.nom. \n");
+           printf("2.prenom. \n");
+           printf("3.telephone. \n");
+           printf("4.age. \n");
+           printf("5.statut. \n");
+           printf("6.reference. \n");
+           printf("7.date de reservation. \n");
+           
+           printf("veuillez entrer un choix :");
+           scanf("%d", choix);
+           
+           switch (choix)
+           {
+           case 1:
+                printf("entrer le nom a ajouté: ");
+                scanf("%s", &referenses[i].nom);
+                printf("le nom à été mis-à-jouré\n");
+                break;
+              
+           case 2:
+                printf("entrer le prenom a ajouté: ");
+                scanf("%s", &referenses[i].prenom);
+                printf("le prenom à été mis-à-jouré\n");
+                break;
+              
+          case 3:
+                printf("entrer le telephone a ajouté: ");
+                scanf("%s", &referenses[i].telephone);
+                printf("le telephone à été mis-à-jouré\n");
+                break;
+                
+          case 4:
+                printf("entrer l'age a ajouté: ");
+                scanf("%s", &referenses[i].age);
+                printf("l'age à été mis-à-jouré\n");
+                break;
+          case 5:
+            recherche_des_reservations();
+              break;
+          case 6:
+            statistiques();
+              break;
+          case 7:
+          printf("vous avez quittez !");
+             break;
+        default:
+            printf("ce choix n'existe pas !");
+        }
+        }
+        
+           
     }
     else if(choix == 2){
         
