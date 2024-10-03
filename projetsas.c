@@ -23,25 +23,28 @@ struct reservation reservations[200];
 
 char nomtemp[20];
 int numrese = 0;
-int found = 0;
+int found;
 int choix;
 int ref;
 int i, j, s, m;
 
 void fausses_informations(){
     struct reservation faussinfo[10]={
-        {"sara","tougha","0734154657",19,1,1,10/01/2024},
-        {"noha","samar","0637103728",18,1,2,24/02/2023},
-        {"youness","wahman","0605183629",20,3,3,22/03/2024},
-        {"nada","meryouchi","0638104328",24,4,4,10/05/2023},
-        {"ilham","elalaoui","0612345678",26,1,5,13/11/2022},
-        {"saraton","toto","0687654321",8,4,6,30/12/2024},
-        {"said","staff","0713579852",23,1,7,17/01/2023},
-        {"tayeb","staaff","0616273849",27,1,8,28/15/2024},
-        {"aymen","sttaf","0788553322",29,2,9,13/03/2023},
-        {"aziz","sttaff","0633164378",22,3,10,01/13/2022}
+        {"sara","tougha","0734154657",19,1,1,10,01,2024},
+        {"noha","samar","0637103728",18,1,2,24,02,2023},
+        {"youness","wahman","0605183629",20,3,3,22,03,2024},
+        {"nada","meryouchi","0638104328",24,4,4,10,05,2023},
+        {"ilham","elalaoui","0612345678",26,1,5,13,11,2022},
+        {"reda","sersif","0687654321",8,4,6,30,12,2024},
+        {"said","staff","0713579852",23,1,7,17,01,2023},
+        {"tayeb","staaff","0616273849",27,1,8,28,15,2024},
+        {"aymen","sttaf","0788553322",29,2,9,13,03,2023},
+        {"aziz","sttaff","0633164378",22,3,10,01,13,2022}
         
     };
+    for(i=0 ; i<10 ; i++){
+            reservations[i] = faussinfo[i];
+    }
 }
 
 void ajouter_une_reservation(){
@@ -77,7 +80,9 @@ void ajouter_une_reservation(){
     printf("l'annee : ");
     scanf("%d", &reservations[numrese].dates.annee);
      
-    reservations[numrese].reference = numrese + 1 ;
+    reservations[numrese].reference = numrese + 11 ;
+    
+    printf("reservation enregitre !");
     numrese++;
     }
     
@@ -102,6 +107,7 @@ void modifier_ou_supprimer_une_reservation()
         printf("veuillez entrer la reference de reservation que vous vouler modifier :");
         scanf("%d", &ref);
         
+        found = 0;
         for (i = 0; i < numrese ; i++){
             if(ref == reservations[i].reference){
                 found++;
@@ -112,7 +118,7 @@ void modifier_ou_supprimer_une_reservation()
         if(found == 0)
            printf("Cette reference n'existe pas \n");
         else{
-           printf("que ce que vous voulez modifier ?");
+           printf("que ce que vous voulez modifier ?\n");
            printf("1.nom. \n");
            printf("2.prenom. \n");
            printf("3.telephone. \n");
@@ -122,7 +128,7 @@ void modifier_ou_supprimer_une_reservation()
            printf("7.quitter ! \n");
            
            printf("veuillez entrer un choix :");
-           scanf("%d", choix);
+           scanf("%d", &choix);
            
            switch (choix)
            {
@@ -188,6 +194,7 @@ void modifier_ou_supprimer_une_reservation()
         printf("veuillez entrer la reference de reservation que vous vouler supprimer :");
         scanf("%d", &ref);
         
+        found = 0;
         for (i = 0; i < numrese ; i++){
             if(ref == reservations[i].reference){
                 found++;
@@ -214,7 +221,8 @@ void afficher_les_details_dune_reservation()
     printf("*******AFFICHER LES DETAILES DUNE RESERVATION*******\n");
     printf("veuillez entrer le reference de reservation que vous voulez :");
     scanf("%d", &ref);
-        
+    
+    found = 0;
     for (i = 0; i < numrese ; i++){
         if(ref == reservations[i].reference){
             found++;
@@ -256,7 +264,7 @@ void  tri_des_reservations()
     if(choix == 1){
         for (i = 0; i < numrese - 1; i++){
           for (j = 0; j < numrese-i- 1; j++){
-               if (strcasecmp(reservations[j].nom,reservations[j+1].nom) == 1){
+               if (strcasecmp(reservations[j].nom,reservations[j+1].nom) > 0){
                    temp = reservations[j+1];
                    reservations[j+1] = reservations[j];
                    reservations[j] = temp;
@@ -266,7 +274,7 @@ void  tri_des_reservations()
     }
     
     else if (choix == 2){
-        (Optionnel)
+        printf("Optionnel");
     }
     
     else if (choix == 3){
@@ -304,7 +312,8 @@ void recherche_des_reservations()
     else if (choix == 2){
         printf("veuillez entrer le nom de reservation que vous voulez :");
     scanf("%s", &nomtemp);
-        
+    
+    found = 0;
     for (i = 0; i < numrese ; i++){
         if(strcmp(nomtemp,reservations[i].nom) == 0){
             found++;
@@ -332,7 +341,7 @@ void recherche_des_reservations()
     }
     
     else if (choix == 3){
-         (Optionnel)
+         printf("Optionnel");
     }
     
     else
@@ -347,7 +356,7 @@ void statistiques()
     
     printf("veuillez entrer les statistiques que vous voulez");
     printf("1.calculer la moyenne d'age des patients ayant reserve.\n ");
-    printf("2.afficher le nombre de patients par tranche d'age. \n ");//(ex. : 0-18 ans, 19-35 ans, 36+ ans).
+    printf("2.afficher le nombre de patients par tranche d'age. \n ");
     printf("3.generer des statistiques pour connaitre le nombre total de reservations par statut. \n ");
     
     printf("veuillez entrer un choix :");
@@ -374,7 +383,7 @@ void statistiques()
         printf("le nombre de patients qui en entre 0-18 ans : %d \n", a);
         
         for(i=0 ; i<numrese ; i++){
-            if(reservations[i].age > 18 || reservations[i].age < 36)
+            if(reservations[i].age >= 19 || reservations[i].age < 36)
               b++;
         }
         printf("le nombre de patients qui en entre 19-35 ans : %d \n", b);
@@ -393,25 +402,25 @@ void statistiques()
         c = 0;
         d = 0;
         for(i=0 ; i<numrese ; i++){
-            if(reservations[i].statut = 1)
+            if(reservations[i].statut == 1)
               a++;
         }
         printf(" le nombre total de reservations valide : %d \n", a);
         
         for(i=0 ; i<numrese ; i++){
-            if(reservations[i].statut = 2)
+            if(reservations[i].statut == 2)
               b++;
         }
         printf("le nombre total de reservations reporte : %d \n", b);
         
         for(i=0 ; i<numrese ; i++){
-            if(reservations[i].statut = 3)
+            if(reservations[i].statut == 3)
               c++;
         }
         printf("le nombre total de reservations annule : %d \n", c);
         
         for(i=0 ; i<numrese ; i++){
-            if(reservations[i].statut = 4)
+            if(reservations[i].statut == 4)
               d++;
         }
         
