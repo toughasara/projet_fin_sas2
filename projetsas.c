@@ -26,7 +26,23 @@ int numrese = 0;
 int found = 0;
 int choix;
 int ref;
-int i, j;
+int i, j, s, m;
+
+void fausses_informations(){
+    struct reservation faussinfo[10]={
+        {"sara","tougha","0734154657",19,1,1,10/01/2024},
+        {"noha","samar","0637103728",18,1,2,24/02/2023},
+        {"youness","wahman","0605183629",20,3,3,22/03/2024},
+        {"nada","meryouchi","0638104328",24,4,4,10/05/2023},
+        {"ilham","elalaoui","0612345678",26,1,5,13/11/2022},
+        {"saraton","toto","0687654321",8,4,6,30/12/2024},
+        {"said","staff","0713579852",23,1,7,17/01/2023},
+        {"tayeb","staaff","0616273849",27,1,8,28/15/2024},
+        {"aymen","sttaf","0788553322",29,2,9,13/03/2023},
+        {"aziz","sttaff","0633164378",22,3,10,01/13/2022}
+        
+    };
+}
 
 void ajouter_une_reservation(){
     printf("*******AJOUTER UNE RESERVATION*******\n");
@@ -326,6 +342,7 @@ void recherche_des_reservations()
 
 void statistiques()
 {
+    int a, b, c, d;
     printf("*******STATISTIQUES*******\n");
     
     printf("veuillez entrer les statistiques que vous voulez");
@@ -337,15 +354,68 @@ void statistiques()
     scanf("%d", &choix);
     
     if(choix == 1){
+        s = 0;
+        for(i=0 ; i<numrese ; i++){
+            s = s + reservations[i].age;
+        }
+        m = s / numrese;
         
+        printf("la moyenne d'age des patients ayant reserve est : %d ", m);
     }
     
     else if(choix == 2){
+        a = 0;
+        b = 0;
+        c = 0;
+        for(i=0 ; i<numrese ; i++){
+            if(reservations[i].age <= 18)
+              a++;
+        }
+        printf("le nombre de patients qui en entre 0-18 ans : %d \n", a);
+        
+        for(i=0 ; i<numrese ; i++){
+            if(reservations[i].age > 18 || reservations[i].age < 36)
+              b++;
+        }
+        printf("le nombre de patients qui en entre 19-35 ans : %d \n", b);
+        
+        for(i=0 ; i<numrese ; i++){
+            if(reservations[i].age > 35)
+              c++;
+        }
+        printf("le nombre de patients qui en entre 36+ ans : %d \n", c);
         
     }
     
     else if(choix == 3){
+        a = 0;
+        b = 0;
+        c = 0;
+        d = 0;
+        for(i=0 ; i<numrese ; i++){
+            if(reservations[i].statut = 1)
+              a++;
+        }
+        printf(" le nombre total de reservations valide : %d \n", a);
         
+        for(i=0 ; i<numrese ; i++){
+            if(reservations[i].statut = 2)
+              b++;
+        }
+        printf("le nombre total de reservations reporte : %d \n", b);
+        
+        for(i=0 ; i<numrese ; i++){
+            if(reservations[i].statut = 3)
+              c++;
+        }
+        printf("le nombre total de reservations annule : %d \n", c);
+        
+        for(i=0 ; i<numrese ; i++){
+            if(reservations[i].statut = 4)
+              d++;
+        }
+        
+        printf("le nombre total de reservations traite : %d \n", d);
     }
     
     else
@@ -354,6 +424,7 @@ void statistiques()
 
 int main() {
     
+    fausses_informations();
     int choix;
     
     do{
