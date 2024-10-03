@@ -211,7 +211,12 @@ void modifier_ou_supprimer_une_reservation()
             reservations[i] = reservations[numrese-1];
             printf("la reservation est supprimer avec success.");
             numrese--;
+            
+            for (i = 0; i < numrese ; i++){
+                reservations[i].reference = i + 1;
+            }
         }
+    
     }
     
     else
@@ -276,7 +281,19 @@ void  tri_des_reservations()
     }
     
     else if (choix == 2){
-        printf("Optionnel");
+        for (i = 0; i < numrese - 1; i++) {
+            for (j = 0; j < numrese - i - 1; j++) {
+                if (reservations[j].dates.annee > reservations[j + 1].dates.annee ||
+                    (reservations[j].dates.annee == reservations[j + 1].dates.annee && reservations[j].dates.mois > reservations[j + 1].dates.mois) ||
+                    (reservations[j].dates.annee == reservations[j + 1].dates.annee && reservations[j].dates.mois == reservations[j + 1].dates.mois && reservations[j].dates.jour > reservations[j + 1].dates.jour)) {
+                    
+                    struct reservation temp = reservations[j + 1];
+                    reservations[j + 1] = reservations[j];
+                    reservations[j] = temp;
+                }
+            }
+        }
+        printf("Les réservations ont été triées par date.\n");
     }
     
     else if (choix == 3){
