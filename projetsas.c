@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
 
 struct date{
   int jour;
@@ -17,8 +18,6 @@ struct reservation {
     struct date dates;
 };
 
-struct reservation temp;
-
 struct reservation reservations[200];
 
 char nomtemp[20];
@@ -30,20 +29,21 @@ int i, j, s, m;
 
 void fausses_informations(){
     struct reservation faussinfo[10]={
-        {"sara","tougha","0734154657",19,1,1,10,01,2024},
-        {"noha","samar","0637103728",18,1,2,24,02,2023},
-        {"youness","wahman","0605183629",20,3,3,22,03,2024},
-        {"nada","meryouchi","0638104328",24,4,4,10,05,2023},
-        {"ilham","elalaoui","0612345678",26,1,5,13,11,2022},
-        {"reda","sersif","0687654321",8,4,6,30,12,2024},
-        {"said","staff","0713579852",23,1,7,17,01,2023},
-        {"tayeb","staaff","0616273849",27,1,8,28,15,2024},
-        {"aymen","sttaf","0788553322",29,2,9,13,03,2023},
-        {"aziz","sttaff","0633164378",22,3,10,01,13,2022}
-        
+        {"sara","tougha","0734154657",19,1,1,{10,01,2024}},
+        {"noha","samar","0637103728",18,1,2,{24,02,2023}},
+        {"youness","wahman","0605183629",20,3,3,{22,03,2024}},
+        {"nada","meryouchi","0638104328",24,4,4,{10,05,2023}},
+        {"ilham","elalaoui","0612345678",26,1,5,{13,11,2022}},
+        {"reda","sersif","0687654321",8,4,6,{30,12,2024}},
+        {"said","staff","0713579852",23,1,7,{17,01,2023}},
+        {"tayeb","staaff","0616273849",27,1,8,{28,15,2024}},
+        {"aymen","sttaf","0788553322",29,2,9,{13,03,2023}},
+        {"aziz","sttaff","0633164378",22,3,10,{01,13,2022}}
+       
     };
     for(i=0 ; i<10 ; i++){
             reservations[i] = faussinfo[i];
+            numrese++;
     }
 }
 
@@ -80,7 +80,9 @@ void ajouter_une_reservation(){
     printf("l'annee : ");
     scanf("%d", &reservations[numrese].dates.annee);
      
-    reservations[numrese].reference = numrese + 11 ;
+    reservations[numrese].reference = numrese + 1 ;
+    
+    printf("la reference de cette reservation est : %d \n", reservations[numrese].reference);
     
     printf("reservation enregitre !");
     numrese++;
@@ -140,13 +142,13 @@ void modifier_ou_supprimer_une_reservation()
               
            case 2:
                 printf("entrer le prenom a ajoute: ");
-                scanf("%s", &reservations[i].prenom);
+                scanf("%s", reservations[i].prenom);
                 printf("le prenom à été mis-à-jouré\n");
                 break;
               
           case 3:
                 printf("entrer le telephone a ajoute: ");
-                scanf("%s", &reservations[i].telephone);
+                scanf("%s", reservations[i].telephone);
                 printf("le telephone à été mis-à-jouré\n");
                 break;
                 
@@ -164,18 +166,18 @@ void modifier_ou_supprimer_une_reservation()
                 printf("4-traite .");
     
                 printf("veulliez entrer un choix de statut :");
-                scanf("%s", &reservations[numrese].statut);
+                scanf("%d", &reservations[i].statut);
                 printf("le statut à été mis-à-jouré\n");
                 break;
                 
           case 6:
                 printf("entrez la date a ajoute. ");
                 printf("le jour : ");
-                scanf("%s", &reservations[numrese].dates.jour);
+                scanf("%d", &reservations[i].dates.jour);
                 printf("le mois : ");
-                scanf("%s", &reservations[numrese].dates.mois);
+                scanf("%d", &reservations[i].dates.mois);
                 printf("l'annee : ");
-                scanf("%s", &reservations[numrese].dates.annee);
+                scanf("%d", &reservations[i].dates.annee);
                 printf("la date à été mis-à-jouré\n");
                 break;
               
@@ -233,19 +235,19 @@ void afficher_les_details_dune_reservation()
     if(found == 0)
         printf("Cette reference n'existe pas \n");
     else{
-        printf("nom : %s \n", reservations[numrese].nom);
+        printf("nom : %s \n", reservations[i].nom);
         
-        printf("prenom : %s \n", reservations[numrese].prenom);
+        printf("prenom : %s \n", reservations[i].prenom);
         
-        printf("telephone : %s \n", reservations[numrese].telephone);
+        printf("telephone : %s \n", reservations[i].telephone);
         
-        printf("age : %d \n\n", reservations[numrese].age);
+        printf("age : %d \n", reservations[i].age);
         
-        printf("statut : %d \n\n", reservations[numrese].statut);
+        printf("statut : %d \n", reservations[i].statut);
         
-        printf("reference : %d \n\n", reservations[numrese].reference);
+        printf("reference : %d \n", reservations[i].reference);
         
-        printf("date : %d/%d/%d \n", reservations[numrese].dates.jour , reservations[numrese].dates.mois , reservations[numrese].dates.annee);
+        printf("date : %d/%d/%d \n", reservations[i].dates.jour , reservations[i].dates.mois , reservations[i].dates.annee);
         }
 }
 
@@ -253,7 +255,7 @@ void  tri_des_reservations()
 {
     printf("*******TRI DES RESERVATIONS*******\n");
     
-    printf("veuillez entrer la maniere de tri que vous voulez");
+    printf("veuillez entrer la maniere de tri que vous voulez \n");
     printf("1.Tri des reservations par Nom.\n ");
     printf("2.Tri des reservations par date. \n ");
     printf("3.Tri des reservations par statut. \n ");
@@ -265,7 +267,7 @@ void  tri_des_reservations()
         for (i = 0; i < numrese - 1; i++){
           for (j = 0; j < numrese-i- 1; j++){
                if (strcasecmp(reservations[j].nom,reservations[j+1].nom) > 0){
-                   temp = reservations[j+1];
+                   struct reservation temp = reservations[j+1];
                    reservations[j+1] = reservations[j];
                    reservations[j] = temp;
                }
@@ -281,7 +283,7 @@ void  tri_des_reservations()
         for (i = 0; i < numrese - 1; i++){
           for (j = 0; j < numrese-i- 1; j++){
                if (reservations[j].statut > reservations[j+1].statut){
-                   temp = reservations[j+1];
+                   struct reservation temp = reservations[j+1];
                    reservations[j+1] = reservations[j];
                    reservations[j] = temp;
                }
@@ -324,19 +326,19 @@ void recherche_des_reservations()
     if(found == 0)
         printf("Ce nom n'existe pas \n");
     else{
-        printf("nom : %s \n", reservations[numrese].nom);
+        printf("nom : %s \n", reservations[i].nom);
         
-        printf("prenom : %s \n", reservations[numrese].prenom);
+        printf("prenom : %s \n", reservations[i].prenom);
         
-        printf("telephone : %s \n", reservations[numrese].telephone);
+        printf("telephone : %s \n", reservations[i].telephone);
         
-        printf("age : %d \n\n", reservations[numrese].age);
+        printf("age : %d \n\n", reservations[i].age);
         
-        printf("statut : %d \n\n", reservations[numrese].statut);
+        printf("statut : %d \n\n", reservations[i].statut);
         
-        printf("reference : %d \n\n", reservations[numrese].reference);
+        printf("reference : %d \n\n", reservations[i].reference);
         
-        printf("date : %d/%d/%d \n", reservations[numrese].dates.jour , reservations[numrese].dates.mois , reservations[numrese].dates.annee);
+        printf("date : %d/%d/%d \n", reservations[i].dates.jour , reservations[i].dates.mois , reservations[i].dates.annee);
         }
     }
     
@@ -383,7 +385,7 @@ void statistiques()
         printf("le nombre de patients qui en entre 0-18 ans : %d \n", a);
         
         for(i=0 ; i<numrese ; i++){
-            if(reservations[i].age >= 19 || reservations[i].age < 36)
+            if(reservations[i].age >= 19 && reservations[i].age < 36)
               b++;
         }
         printf("le nombre de patients qui en entre 19-35 ans : %d \n", b);
@@ -432,7 +434,6 @@ void statistiques()
 }
 
 int main() {
-    
     fausses_informations();
     int choix;
     
