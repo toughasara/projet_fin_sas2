@@ -61,9 +61,9 @@ void affichage(){
 
        printf("statut : %d \n", reservations[i].statut);
 
-       printf("reference : %d \n\n", reservations[i].reference);
+       printf("reference : %d \n", reservations[i].reference);
 
-       printf("date : %d/%d/%d \n", reservations[i].dates.jour , reservations[i].dates.mois , reservations[i].dates.annee);
+       printf("date : %d/%d/%d \n\n", reservations[i].dates.jour , reservations[i].dates.mois , reservations[i].dates.annee);
 }
 
 void ajouter_une_reservation(){
